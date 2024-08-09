@@ -7,9 +7,9 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm a undergraduate student at Seoul National University advised by [Gunhee Kim](https://vision.snu.ac.kr/gunhee/).
+Hello! I'm an undergraduate student at Seoul National University advised by [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interest lies in natural language processing and machine learning. In particular, I focus on advancing language models in a sustainable and impactful way, specifically through retrieval-augmented LMs.
 
-## Publications & Preprints
+## Publications
 <!-- ============== -->
 <!-- * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
