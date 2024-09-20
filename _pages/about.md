@@ -11,9 +11,10 @@ Hello! I'm an undergraduate student at Seoul National University advised by [Gun
 
 ## Publications
 <!-- ============== -->
-<!-- * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
+* ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
-  **Preprint** -->
+  **EMNLP 2024**
+  [[paper]] [[code]]
 
 * ### GrowOVER: How Can LLMs Adapt to Growing Real-World Knowledge?   
   Dayoon Ko, **Jinyoung Kim**, Hahyeon Choi, Gunhee Kim   
