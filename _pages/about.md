@@ -13,8 +13,8 @@ Hello! I'm an undergraduate student at Seoul National University advised by [Gun
 <!-- ============== -->
 * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
-  **EMNLP 2024**
-  [[paper]]() [[code]]()
+  **EMNLP 2024**   
+  [paper] [code]
 
 * ### GrowOVER: How Can LLMs Adapt to Growing Real-World Knowledge?   
   Dayoon Ko, **Jinyoung Kim**, Hahyeon Choi, Gunhee Kim   
@@ -34,8 +34,8 @@ Hello! I'm an undergraduate student at Seoul National University advised by [Gun
   Machine Learning Researcher
 * ### [Music & Audio Research Group](https://snu-marg.notion.site/MARG-091390162ca941f4b88f64d47d2c4e87), SNU <span style="font-size:0.9em;">(Jul. 2022 - Aug. 2022)</span> 
   Research Intern
-* ### 176th Financial Management Support Unit, Eighth Army <span style="font-size:0.9em;">(Jul. 2020 - Jan. 2022)</span> 
-  [KATUSA](https://en.wikipedia.org/wiki/Korean_Augmentation_to_the_United_States_Army) Sergeant (Mandatory Military Service)
+<!-- * ### 176th Financial Management Support Unit, Eighth Army <span style="font-size:0.9em;">(Jul. 2020 - Jan. 2022)</span> 
+  [KATUSA](https://en.wikipedia.org/wiki/Korean_Augmentation_to_the_United_States_Army) Sergeant (Mandatory Military Service) -->
 
 <!-- ### Devsisters
 *Machine Learning Engineer*  
