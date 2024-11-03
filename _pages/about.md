@@ -7,14 +7,14 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm an undergraduate student at Seoul National University advised by [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interest lies in natural language processing and machine learning. In particular, I focus on advancing language models in a sustainable and impactful way, specifically through retrieval-augmented LMs.
+Hello! I'm an undergraduate student at Seoul National University advised by [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interest lies in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
 
 ## Publications
 <!-- ============== -->
 * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
   **EMNLP 2024**   
-  [paper] [code]
+  [[paper]](https://arxiv.org/abs/2410.11494) [[code]](https://github.com/jiny1623/DynamicER)
 
 * ### GrowOVER: How Can LLMs Adapt to Growing Real-World Knowledge?   
   Dayoon Ko, **Jinyoung Kim**, Hahyeon Choi, Gunhee Kim   
