@@ -7,9 +7,11 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I am a recent graduate from Seoul National University, currently a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.   
+Hello! I am a recent graduate from Seoul National University, currently a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/).  
 
-I'm looking for a PhD program starting in Fall 2025! Feel free to contact me.
+My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.   
+
+I'm looking for a PhD program starting in Fall 2025. Feel free to contact me!
 
 ## Publications
 <!-- ============== -->
@@ -32,7 +34,8 @@ I'm looking for a PhD program starting in Fall 2025! Feel free to contact me.
 * ### Seoul National University <span style="font-size:0.9em;">(Mar. 2018 - Aug. 2024)</span>   
   **B.S.** in Computer Science and Engineering   
   **B.A.** in Economics   
-  Graduated with **Summa Cum Laude** (Leave of absense for military service: Jul. 2020 - Jan. 2022)
+  Graduated with **Summa Cum Laude**   
+  <span style="font-size:0.9em;">(Leave of absence for military service: Jul. 2020 - Jan. 2022)</span>
 
   
 ## Experiences
