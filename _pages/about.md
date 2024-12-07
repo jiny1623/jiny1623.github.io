@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I am a recent graduate from Seoul National University, currently a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/).  
+Hello! I am a recent graduate from Seoul National University, currently a research intern at [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/).  
 
 My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.   
 
