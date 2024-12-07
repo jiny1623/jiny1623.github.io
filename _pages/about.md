@@ -7,7 +7,9 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I'm an undergraduate student at Seoul National University advised by [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interest lies in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
+Hello! I am a recent graduate from Seoul National University, currently a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.   
+
+I'm looking for a PhD program starting in Fall 2025! Feel free to contact me.
 
 ## Publications
 <!-- ============== -->
@@ -21,21 +23,38 @@ Hello! I'm an undergraduate student at Seoul National University advised by [Gun
   **ACL 2024**   
   [[paper]](https://arxiv.org/abs/2406.05606) [[code]](https://github.com/dayoon-ko/GrowOVER)
 
+* ### GradNormIR: Unsupervised Prediction of Document Retrieval Failure
+  Dayoon Ko, **Jinyoung Kim**, Jinhyuk Kim, Jaehoon Lee, Seonghak Song, Minyoung Lee, Gunhee Kim   
+  Submitted to ACL Rolling Review
+
 
 ## Education
-* ### Seoul National University <span style="font-size:0.9em;">(Mar. 2018 - Present)</span>   
+* ### Seoul National University <span style="font-size:0.9em;">(Mar. 2018 - Aug. 2024)</span>   
   **B.S.** in Computer Science and Engineering   
-  **B.A.** in Economics
+  **B.A.** in Economics   
+  Graduated with **Summa Cum Laude** (Leave of absense for military service: Jul. 2020 - Jan. 2022)
+
   
 ## Experiences
 * ### [Vision & Learning Lab](https://vision.snu.ac.kr/), SNU <span style="font-size:0.9em;">(Sep. 2023 - Present)</span>
   Research Intern
+  * Conducted research on evolving knowledge and retrieval-augmented generation
+  * Published 2 papers in top-tier conferences, 1 paper under review
+  
 * ### [CLOVA Voice & Avatar Team](https://clova.ai/speech/en), NAVER <span style="font-size:0.9em;">(Jan. 2023 - Feb. 2023)</span>     
   Machine Learning Researcher
+  * Topic: Unified Accent Estimation for Speech Synthesis
+  * Achieved 7.8% improvement in Accent Phrase (AP) prediction accuracy by unifying estimation for AP and Accent Nucleus (AN) boundaries
+  * Designed and implemented novel AN decoder framework to address challenges in the long-tail distribution of accent estimation
 * ### [Music & Audio Research Group](https://snu-marg.notion.site/MARG-091390162ca941f4b88f64d47d2c4e87), SNU <span style="font-size:0.9em;">(Jul. 2022 - Aug. 2022)</span> 
   Research Intern
-<!-- * ### 176th Financial Management Support Unit, Eighth Army <span style="font-size:0.9em;">(Jul. 2020 - Jan. 2022)</span> 
-  [KATUSA](https://en.wikipedia.org/wiki/Korean_Augmentation_to_the_United_States_Army) Sergeant (Mandatory Military Service) -->
+  * Conducted research on personalized symbolic music generation
+  * Developed contrastive learning-based encoder and holistic frameworks for emotion and style conditioning in music generation
+
+## Leadership Experiences
+
+* ### Squad Leader, [Korean Augmentation to the US Army](https://en.wikipedia.org/wiki/Korean_Augmentation_to_the_United_States_Army) <span style="font-size:0.9em;">(Jul. 2020 - Jan. 2022)</span> 
+  Sergeant, 176th Financial Management Support Unit, Eight Army
 
 <!-- ### Devsisters
 *Machine Learning Engineer*  
