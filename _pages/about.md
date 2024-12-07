@@ -32,10 +32,10 @@ I'm looking for a PhD program starting in Fall 2025. Feel free to contact me!
 
 ## Education
 * ### Seoul National University <span style="font-size:0.9em;">(Mar. 2018 - Aug. 2024)</span>   
-  **B.S.** in Computer Science and Engineering   
-  **B.A.** in Economics   
+  <span style="font-size:0.9em;">(Leave of absence for military service: Jul. 2020 - Jan. 2022)</span>   
+  **B.S.** in Computer Science and Engineering & **B.A.** in Economics   
   Graduated with **Summa Cum Laude**   
-  <span style="font-size:0.9em;">(Leave of absence for military service: Jul. 2020 - Jan. 2022)</span>
+
 
   
 ## Experiences
