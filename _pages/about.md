@@ -9,9 +9,7 @@ redirect_from:
 
 Hello! I am a research intern at [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). I recently completed my undergraduate degree at Seoul National University.
 
-My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.   
-
-I'm looking for a PhD program starting in Fall 2025. Feel free to contact me!
+My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
 
 ## Publications
 <!-- ============== -->
@@ -25,9 +23,9 @@ I'm looking for a PhD program starting in Fall 2025. Feel free to contact me!
   **ACL 2024**   
   [[paper]](https://arxiv.org/abs/2406.05606) [[code]](https://github.com/dayoon-ko/GrowOVER)
 
-* ### GradNormIR: Unsupervised Prediction of Document Retrieval Failure
+<!-- * ### GradNormIR: Unsupervised Prediction of Document Retrieval Failure
   Dayoon Ko, **Jinyoung Kim**, Jinhyuk Kim, Jaehoon Lee, Seonghak Song, Minyoung Lee, Gunhee Kim   
-  Submitted to ACL Rolling Review
+  Submitted to ACL Rolling Review -->
 
 
 ## Education
