@@ -15,7 +15,7 @@ My primary research interests lie in natural language processing and machine lea
 <!-- ============== -->
 * ### GradNormIR: When Should We Update the Dense Retriever in Evolving Corpora?
   Dayoon Ko, **Jinyoung Kim**, Sohyeon Kim, Jinhyuk Kim, Jaehoon Lee, Seonghak Song, Minyoung Lee, Gunhee Kim   
-  **ACL 2025 Findings**
+  **ACL 2025 Findings**   
   [[paper]]() [[code]]()
 
 * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
