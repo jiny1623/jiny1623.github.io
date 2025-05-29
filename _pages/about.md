@@ -7,12 +7,17 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I am a research intern at [Vision & Learning Lab](https://vision.snu.ac.kr/) advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). I recently completed my undergraduate degree at Seoul National University.
+Hello! I am an incoming Ph.D. student in Computer Science and Engineering at the University of Michigan, where I will be advised by Prof. [Lu Wang](https://web.eecs.umich.edu/~wangluxy/). Currently, I am a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) at Seoul National University, advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). 
 
 My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
 
 ## Publications
 <!-- ============== -->
+* ### GradNormIR: When Should We Update the Dense Retriever in Evolving Corpora?
+  Dayoon Ko, **Jinyoung Kim**, Sohyeon Kim, Jinhyuk Kim, Jaehoon Lee, Seonghak Song, Minyoung Lee, Gunhee Kim   
+  **ACL 2025 Findings**
+  [[paper]]() [[code]]()
+
 * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
   **EMNLP 2024**   
@@ -41,7 +46,7 @@ My primary research interests lie in natural language processing and machine lea
 * ### [Vision & Learning Lab](https://vision.snu.ac.kr/), SNU <span style="font-size:0.9em;">(Sep. 2023 - Present)</span>
   Research Intern
   * Conducted research on evolving knowledge and retrieval-augmented generation
-  * Published 2 papers in top-tier conferences, 1 paper under review
+  * Published 3 papers in top-tier conferences
   
 * ### [CLOVA Voice & Avatar Team](https://clova.ai/speech/en), NAVER <span style="font-size:0.9em;">(Jan. 2023 - Feb. 2023)</span>     
   Machine Learning Researcher
