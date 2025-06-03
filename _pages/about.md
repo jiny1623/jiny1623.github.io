@@ -13,10 +13,10 @@ My primary research interests lie in natural language processing and machine lea
 
 ## Publications
 <!-- ============== -->
-* ### GradNormIR: When Should We Update the Dense Retriever in Evolving Corpora?
+* ### When Should Dense Retrievers Be Updated in Evolving Corpora? Detecting Out-of-Distribution Corpora Using GradNormIR   
   Dayoon Ko, **Jinyoung Kim**, Sohyeon Kim, Jinhyuk Kim, Jaehoon Lee, Seonghak Song, Minyoung Lee, Gunhee Kim   
   **ACL 2025 Findings**   
-  [[paper]]() [[code]]()
+  [[paper]](https://arxiv.org/abs/2506.01877) [[code]](https://github.com/dayoon-ko/gradnormir)
 
 * ### DynamicER: Resolving Emerging Mentions to Dynamic Entities for RAG   
   **Jinyoung Kim**, Dayoon Ko, Gunhee Kim   
