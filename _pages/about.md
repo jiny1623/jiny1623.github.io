@@ -14,10 +14,8 @@ My primary research interests lie in natural language processing and machine lea
   * Retrieval-augmented and data-centric adaptation for models facing evolving knowledge
   * Fine-grained evaluation frameworks that enable continual improvement and robust generalization
 
-## CV
-Here is my CV:
-<a class="btn btn--primary" href="https://drive.google.com/file/d/1C44hPamECTSzpB5sXOgVjaMKfYzvm9-Y/view?usp=sharing" target="_blank" rel="noopener">Download CV (PDF)</a>
-<span style="font-size:0.9em; margin-left:8px;">Updated {{ site.time | date: "%b %Y" }}</span>
+Here is my [CV](https://drive.google.com/file/d/1C44hPamECTSzpB5sXOgVjaMKfYzvm9-Y/view?usp=sharing).
+
 
 ## Current Research Projects   
 
