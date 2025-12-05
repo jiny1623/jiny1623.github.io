@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hello! I am an incoming Ph.D. student in Computer Science and Engineering at the University of Michigan, where I will be advised by Prof. [Lu Wang](https://web.eecs.umich.edu/~wangluxy/). Currently, I am a research intern at the [Vision & Learning Lab](https://vision.snu.ac.kr/) at Seoul National University, advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). 
+Hello! I am a first-year Ph.D. student in Computer Science and Engineering at the University of Michigan, where I'm advised by Prof. [Lu Wang](https://web.eecs.umich.edu/~wangluxy/). Previously, I was an undergraduate researcher at the [Vision & Learning Lab](https://vision.snu.ac.kr/) at Seoul National University, advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). 
 
 My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
 
