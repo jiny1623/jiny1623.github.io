@@ -9,6 +9,10 @@ redirect_from:
 
 {% include base_path %}
 
+[Download CV (PDF)](google.com){: .btn .btn--primary}
+
+---
+
 Education
 ======
 * Ph.D in Version Control Theory, GitHub University, 2018 (expected)
