@@ -9,7 +9,21 @@ redirect_from:
 
 Hello! I am a first-year Ph.D. student in Computer Science and Engineering at the University of Michigan, where I'm advised by Prof. [Lu Wang](https://web.eecs.umich.edu/~wangluxy/). Previously, I was an undergraduate researcher at the [Vision & Learning Lab](https://vision.snu.ac.kr/) at Seoul National University, advised by Prof. [Gunhee Kim](https://vision.snu.ac.kr/gunhee/). 
 
-My primary research interests lie in natural language processing and machine learning, with a focus on building sustainable, general-purpose AI systems that can adapt to dynamic and evolving environments.
+My primary research interests lie in natural language processing and machine learning, with a focus on developing adaptive and trustworthy AI systems that can operate reliably in dynamic environments. I work on:
+  * Learning-to-critique with reinforcement learning for improving non-verifiable and long-horizon reasoning
+  * Retrieval-augmented and data-centric adaptation for models facing evolving knowledge
+  * Fine-grained evaluation frameworks that enable continual improvement and robust generalization
+
+## Current Research Projects   
+
+### 1. Learning-to-Critique with Reinforcement Learning  
+I explore reinforcement learning methods that enable models to *critique, revise, and refine* their own reasoning, especially in non-verifiable tasks where correctness is difficult to judge. My work investigates how models can generate structured feedback, self-evaluate intermediate steps, and improve through iterative critique loops, with the goal of building more reliable and interpretable reasoning systems.   
+
+### 2. Retrieval-Augmented and Data-Centric Adaptation  
+I study how AI systems can incorporate new or evolving knowledge through retrieval and data-centric methods. This includes understanding when models should rely on external information, how to handle shifting or conflicting sources, and how retrieval affects downstream reasoning. My research aims to improve robustness as real-world knowledge changes, without requiring expensive retraining.   
+
+### 3. Fine-Grained Evaluation for Continual Improvement  
+I develop evaluation frameworks that diagnose model behavior at a detailed level, capturing nuances in reasoning quality, factuality, and robustness across domains. These frameworks support continual model improvement by revealing where models struggle, what types of errors they make, and how their performance evolves under distribution shift.   
 
 ## Publications
 <!-- ============== -->
@@ -34,6 +48,10 @@ My primary research interests lie in natural language processing and machine lea
 
 
 ## Education
+
+* ### University of Michigan <span style="font-size:0.9em;">(Aug. 2025 - Present)</span>   
+  **Ph.D.** student in Computer Science and Engineering
+
 * ### Seoul National University <span style="font-size:0.9em;">(Mar. 2018 - Aug. 2024)</span>   
   <!-- <span style="font-size:0.9em;">(Leave of absence for military service: Jul. 2020 - Jan. 2022)</span>    -->
   Leave of absence for military service: Jul. 2020 - Jan. 2022   
