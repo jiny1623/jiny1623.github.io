@@ -54,10 +54,14 @@
     }
 
     .figure .caption {
-      font-size: 0.92em;
-      color: #555;
-      margin-top: 0.8em;
+      font-size: 0.82em;
+      color: #444;
+      margin-top: 0.6em;
+      padding-top: 0.5em;
+      border-top: 1px solid #e0e0e0;
       text-align: left;
+      font-style: italic;
+      line-height: 1.5;
     }
 
     pre code {
@@ -70,17 +74,6 @@
 
     .hero {
       background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    }
-
-    .tag-venue {
-      background: #e8f4f8;
-      color: #1565c0;
-      font-weight: 600;
-      font-size: 0.95em;
-      padding: 0.3em 0.9em;
-      border-radius: 20px;
-      display: inline-block;
-      margin-bottom: 0.8em;
     }
 
     .button.is-disabled {
@@ -129,10 +122,6 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-
-          <div>
-            <span class="tag-venue">EMNLP 2026</span>
-          </div>
 
           <h1 class="title is-1 publication-title">
             Co-Evolving Actor-Conditioned Critics<br>for Non-Verifiable Generation
@@ -250,23 +239,26 @@
             We conduct controlled analyses on WritingBench to test whether critique usefulness is
             intrinsic to the critique or conditioned on the actor. We find two key asymmetries:
             <strong>scaling the critic</strong> consistently improves standalone critique quality but
-            yields mixed adherence and only modest downstream gains; while <strong>scaling the
-            actor</strong> (with the same critique fixed) substantially improves both adherence and
-            downstream quality. This confirms that critique usefulness is a property of the
-            <em>critique&ndash;actor pair</em>, not the critique alone.
+            does not reliably lead the actor to incorporate that feedback or yield larger downstream
+            gains; while <strong>scaling the actor</strong> (with the same critique fixed) substantially
+            improves both how well the actor follows the feedback and downstream quality. This confirms
+            that critique usefulness is a property of the <em>critique&ndash;actor pair</em>, not the
+            critique alone.
           </p>
           <div class="figure" style="margin-top: 1.5em;">
             <img src="./figure/motiv_means_sans.png"
-                 alt="Controlled analysis: scaling critic vs. scaling actor on critique adherence and gain">
+                 alt="Controlled analysis: scaling critic vs. scaling actor on critique adherence and gain"
+                 style="display: block; margin: auto;">
             <p class="caption">
               Controlled zero-shot analysis of critique-guided refinement, summarized as mean deltas over
-              controlled comparisons. <em>Critic quality</em>, <em>Critique adherence</em>, and
-              <em>Gain</em> denote standalone critique quality, how well the actor incorporates the
-              critique into the revision, and downstream improvement
-              S(y<sub>1</sub>)&minus;S(y<sub>0</sub>) under the WritingBench evaluator. Scaling the
-              critic consistently improves standalone critique quality, but yields mixed adherence and only
-              modest downstream gains. In contrast, scaling the actor while keeping the same initial
-              response and critique fixed produces substantially larger gains in both adherence and quality.
+              controlled comparisons. <em>Critic quality</em> measures standalone feedback quality.
+              <em>Critique adherence</em> measures how well the actor incorporates the critique into
+              its revision (rather than making unrelated edits). <em>Gain</em> is the downstream
+              improvement S(y<sub>1</sub>)&minus;S(y<sub>0</sub>) under the WritingBench evaluator.
+              Scaling the critic improves standalone critique quality but does not reliably lead the
+              actor to follow the feedback or yield larger gains. In contrast, scaling the actor while
+              keeping the same critique fixed produces substantially larger improvements in both
+              feedback uptake and downstream quality.
             </p>
           </div>
         </div>
@@ -290,16 +282,16 @@
           <ol>
             <li>
               <strong>TAIScore.</strong> Given a full rollout &tau;&nbsp;=&nbsp;(x,&nbsp;y<sub>0</sub>,
-              c,&nbsp;y<sub>1</sub>), a judge first produces four diagnostic scores &mdash;
-              <em>critique validity</em>, <em>critique adherence</em>, <em>targeted improvement</em>, and
-              <em>faithfulness</em> &mdash; then produces a final scalar reward
+              c,&nbsp;y<sub>1</sub>), a judge first produces four diagnostic scores
+              (<em>critique validity</em>, <em>critique adherence</em>, <em>targeted improvement</em>,
+              and <em>faithfulness</em>), then produces a final scalar reward
               T(&tau;)&nbsp;&isin;&nbsp;[1,&nbsp;10]. This diagnostic scaffold ensures the reward reflects
               actor-conditioned usefulness rather than standalone critique quality or final revision
               quality alone.
             </li>
             <li>
               <strong>Critic update (GRPO).</strong> For each initial response y<sub>0</sub>, the critic
-              samples N&nbsp;=&nbsp;4 critiques. Each critique triggers an actor revision, and all
+              samples N critiques. Each critique triggers an actor revision, and all
               rollouts in the group are scored by TAIScore. Group-relative advantages reward critiques
               that provide more useful revision guidance than the other critiques for the same prompt.
             </li>
@@ -460,9 +452,9 @@
             We examine whether actor-tailored critics transfer across actors by applying critics trained
             for <code>Qwen3-4B</code> and <code>Qwen3-8B</code> to both actors. Critics provide positive
             gains even when transferred, suggesting that TAIScore learns broadly useful revision signals.
-            At the same time, the matched critic consistently obtains the highest score for both actors
-            &mdash; consistent with our actor-conditioned view that aligning the critic with the target
-            actor provides additional benefit.
+            At the same time, the matched critic consistently obtains the highest score for both actors,
+            consistent with our actor-conditioned view that aligning the critic with the target actor
+            provides additional benefit.
           </p>
           <div class="figure" style="margin-top: 1.5em;">
             <img src="./figure/opt1_gains.png"
