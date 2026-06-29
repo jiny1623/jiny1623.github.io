@@ -54,7 +54,7 @@
     }
 
     .figure .caption {
-      font-size: 0.82em;
+      font-size: 0.88em;
       color: #444;
       margin-top: 0.6em;
       padding-top: 0.5em;
@@ -133,13 +133,13 @@
             <span class="author-block">
               <a href="https://mukhal.github.io">Muhammad Khalifa</a><sup>2</sup>,</span>
             <span class="author-block">
-              Lajanugen Logeswaran<sup>3</sup>,</span>
+              <a href="https://lajanugen.github.io/">Lajanugen Logeswaran</a><sup>3</sup>,</span>
             <span class="author-block">
-              Jaekyeom Kim<sup>3</sup>,</span>
+              <a href="https://jaekyeom.github.io/">Jaekyeom Kim</a><sup>3</sup>,</span>
             <span class="author-block">
-              Moontae Lee<sup>3,4</sup>,</span>
+              <a href="https://moontae.github.io/">Moontae Lee</a><sup>3,4</sup>,</span>
             <span class="author-block">
-              Honglak Lee<sup>1,3</sup>,</span>
+              <a href="https://web.eecs.umich.edu/~honglak/">Honglak Lee</a><sup>1,3</sup>,</span>
             <span class="author-block">
               <a href="https://web.eecs.umich.edu/~wangluxy/">Lu Wang</a><sup>1</sup>
             </span>
@@ -248,17 +248,14 @@
           <div class="figure" style="margin-top: 1.5em;">
             <img src="./figure/motiv_means_sans.png"
                  alt="Controlled analysis: scaling critic vs. scaling actor on critique adherence and gain"
-                 style="display: block; margin: auto;">
+                 style="display: block; margin: auto; max-width: 72%;">
             <p class="caption">
-              Controlled zero-shot analysis of critique-guided refinement, summarized as mean deltas over
-              controlled comparisons. <em>Critic quality</em> measures standalone feedback quality.
-              <em>Critique adherence</em> measures how well the actor incorporates the critique into
-              its revision (rather than making unrelated edits). <em>Gain</em> is the downstream
-              improvement S(y<sub>1</sub>)&minus;S(y<sub>0</sub>) under the WritingBench evaluator.
-              Scaling the critic improves standalone critique quality but does not reliably lead the
-              actor to follow the feedback or yield larger gains. In contrast, scaling the actor while
-              keeping the same critique fixed produces substantially larger improvements in both
-              feedback uptake and downstream quality.
+              Controlled analysis of critique-guided refinement on WritingBench.
+              <em>Critic quality</em>: standalone feedback quality.
+              <em>Critique adherence</em>: how well the actor incorporates the critique (vs. making unrelated edits).
+              <em>Gain</em>: downstream improvement S(y<sub>1</sub>)&minus;S(y<sub>0</sub>).
+              Scaling the critic improves critique quality but does not reliably improve actor uptake or downstream gains.
+              Scaling the actor with the same critique produces substantially larger improvements in both.
             </p>
           </div>
         </div>
@@ -311,14 +308,10 @@
             <img src="./figure/method.png"
                  alt="Overview of co-evolving critic-actor training framework">
             <p class="caption">
-              Overview of our co-evolving critic&ndash;actor training framework. For the current actor
-              &pi;<sub>t</sub>, the critic &kappa;<sub>t</sub> samples multiple critiques for the same
-              initial response y<sub>0</sub>. Each critique produces a rollout
-              &tau;<sub>i</sub>&nbsp;=&nbsp;(x,&nbsp;y<sub>0</sub>,&nbsp;c<sub>i</sub>,&nbsp;y<sub>1,i</sub>).
-              TAIScore evaluates each rollout and produces a GRPO reward for critic adaptation. The
-              adapted critic &kappa;<sub>t+1</sub> then generates critique-guided revisions, converted
-              into DPO preference pairs y<sub>1</sub>&nbsp;&succ;&nbsp;y<sub>0</sub> to update the
-              actor. Alternating these two updates yields co-evolving critics and actors.
+              The critic &kappa;<sub>t</sub> samples N critiques per initial response; each produces a
+              rollout scored by TAIScore as a GRPO reward. The adapted critic &kappa;<sub>t+1</sub>
+              generates revisions used as DPO preference pairs to update the actor.
+              Alternating these two steps yields co-evolving critics and actors.
             </p>
           </div>
         </div>
