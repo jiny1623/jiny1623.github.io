@@ -4,9 +4,15 @@
   <meta charset="utf-8">
   <meta name="description"
         content="Co-Evolving Actor-Conditioned Critics for Non-Verifiable Generation. We introduce TAIScore, a reward that evaluates the full critique-guided revision process to train actor-tailored critics.">
-  <meta name="keywords" content="TAIScore, critique, actor, non-verifiable generation, RLHF, DPO, GRPO, creative writing, deep research">
+  <meta name="keywords" content="TAIScore, critique, actor-conditioned, non-verifiable generation, RLHF, DPO, GRPO, co-evolution, LLM-as-a-judge, creative writing, deep research">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Co-Evolving Actor-Conditioned Critics for Non-Verifiable Generation</title>
+
+  <meta property="og:title" content="Co-Evolving Actor-Conditioned Critics for Non-Verifiable Generation">
+  <meta property="og:description"
+        content="TAIScore rewards critiques that identify a real weakness, are followed by the target actor, and cause targeted improvement — enabling co-evolving critic-actor training.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jiny1623.github.io/projects/taiscore/">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -88,10 +94,43 @@
       background: #f0f4f8;
     }
 
+    .results-table .std {
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    .results-table .group-row td {
+      background: #f9f9f9;
+      color: #777;
+      font-style: italic;
+      font-size: 0.85em;
+      padding: 0.35em 0.75em;
+    }
+
+    .table-note {
+      font-size: 0.86em;
+      color: #555;
+      margin-top: 0.5em;
+      line-height: 1.5;
+    }
+
+    .callout {
+      border-left: 3px solid #1f4e9c;
+      background: #f6f8fb;
+      padding: 0.9em 1.2em;
+      margin-top: 1.5em;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.94em;
+    }
+
     .section-divider {
       border: none;
       border-top: 1px solid #e8e8e8;
       margin: 0;
+    }
+
+    .setup-list {
+      font-size: 0.94em;
     }
   </style>
 </head>
@@ -151,18 +190,20 @@
 
           <div class="column has-text-centered" style="margin-top: 0.5em;">
             <div class="publication-links">
-              <!-- PDF — update href when available -->
+              <!-- PDF -->
               <span class="link-block">
-                <a class="external-link button is-normal is-rounded is-dark is-disabled"
-                   title="Coming soon">
+                <a href="https://arxiv.org/pdf/2608.30397"
+                   class="external-link button is-normal is-rounded is-dark"
+                   target="_blank" rel="noopener">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
-              <!-- arXiv — update href when available -->
+              <!-- arXiv -->
               <span class="link-block">
-                <a class="external-link button is-normal is-rounded is-dark is-disabled"
-                   title="Coming soon">
+                <a href="https://arxiv.org/abs/2608.30397"
+                   class="external-link button is-normal is-rounded is-dark"
+                   target="_blank" rel="noopener">
                   <span class="icon"><i class="ai ai-arxiv"></i></span>
                   <span>arXiv</span>
                 </a>
@@ -194,11 +235,11 @@
         <div class="content has-text-justified">
           <p>
             Natural-language critiques provide supervision beyond scalar rewards for non-verifiable
-            generation, where quality is multi-dimensional and no deterministic verifier exists. In
-            critique-guided refinement, a critic gives feedback on an initial response and an actor
-            revises it. However, final revision quality does not reveal whether the critique was actually
-            useful: a capable actor may improve without following the feedback, while valid feedback may
-            fail if the actor cannot execute it.
+            generation, which lacks deterministic verifiers. In critique-guided refinement, a critic
+            gives feedback on an initial response and an actor revises it. However, final revision
+            quality does not reveal whether the critique was actually useful: a capable actor may
+            improve without following the feedback, while valid feedback may fail if the actor cannot
+            execute it.
           </p>
           <p>
             We frame critique as <em>actor-conditioned revision guidance</em>, where usefulness depends on
@@ -233,14 +274,16 @@
         <h2 class="title is-3">Critique Usefulness Is Actor-Conditioned</h2>
         <div class="content has-text-justified">
           <p>
-            We conduct controlled analyses on WritingBench to test whether critique usefulness is
-            intrinsic to the critique or conditioned on the actor. We find two key asymmetries:
-            <strong>scaling the critic</strong> consistently improves standalone critique quality but
-            does not reliably lead the actor to incorporate that feedback or yield larger downstream
-            gains; while <strong>scaling the actor</strong> (with the same critique fixed) substantially
-            improves both how well the actor follows the feedback and downstream quality. This confirms
-            that critique usefulness is a property of the <em>critique&ndash;actor pair</em>, not the
-            critique alone.
+            We run two controlled analyses on 1,000 WritingBench examples, varying one role at a time,
+            to test whether critique usefulness is intrinsic to the critique or conditioned on the actor.
+            The result is a clear asymmetry. <strong>Scaling the critic</strong> (8B&rarr;32B for Qwen,
+            8B&rarr;70B for Llama), with the initial response and revising actor held fixed, consistently
+            improves standalone critique quality but does not reliably lead the actor to incorporate the
+            feedback or yield larger downstream gains &mdash; for a Qwen3-8B refiner, critique adherence
+            actually <em>drops</em> by 0.223 when the critic is scaled up. <strong>Scaling the actor</strong>,
+            with the same critique held fixed, substantially improves both adherence (+1.29 on average) and
+            downstream gain (+0.39). Critique usefulness is therefore a property of the
+            <em>critique&ndash;actor pair</em>, not of the critique alone.
           </p>
           <div class="figure" style="margin-top: 1.5em;">
             <img src="./figure/motiv_means_sans.png"
@@ -248,15 +291,27 @@
                  style="display: block; margin: auto; max-width: 72%;">
             <p class="caption">
               Controlled zero-shot analysis of critique-guided refinement, summarized as mean deltas over
-              controlled comparisons. <em>Critic quality</em> measures standalone feedback quality.
-              <em>Critique adherence</em> measures how well the actor incorporates the critique into
-              its revision (rather than making unrelated edits). <em>Gain</em> is the downstream
-              improvement S(y<sub>1</sub>)&minus;S(y<sub>0</sub>) under the WritingBench evaluator.
-              Scaling the critic improves standalone critique quality but does not reliably lead the
-              actor to follow the feedback or yield larger gains. In contrast, scaling the actor while
-              keeping the same critique fixed produces substantially larger improvements in both
-              feedback uptake and downstream quality.
+              controlled comparisons. <em>Critique quality</em> measures standalone feedback quality and
+              never observes the revision. <em>Critique adherence</em> measures how well the actor
+              incorporates the critique into its revision (rather than making unrelated edits).
+              <em>Gain</em> is the downstream improvement
+              S(y<sub>1</sub>)&minus;S(y<sub>0</sub>) under the WritingBench evaluator. Scaling the critic
+              improves standalone critique quality but does not reliably lead the actor to follow the
+              feedback or yield larger gains. In contrast, scaling the actor while keeping the same
+              critique fixed produces substantially larger improvements in both feedback uptake and
+              downstream quality.
             </p>
+          </div>
+
+          <div class="callout">
+            <strong>The reachability gap.</strong> For a martial-arts story prompt, a
+            <code>Qwen3-32B</code> critique scores <em>higher</em> in standalone quality than a
+            <code>Qwen3-8B</code> critique (9.00 vs. 8.33), yet yields far <em>lower</em> adherence from
+            the same <code>Qwen3-8B</code> refiner (3.50 vs. 8.75). The 8B critic requests localized
+            changes the refiner can carry out; the 32B critic proposes a coordinated redesign spanning
+            symbolism, character motivation, climax, ending, and dialogue, of which the refiner adopts
+            only isolated pieces. Feedback that looks stronger in isolation can be less useful when its
+            requested changes exceed the target actor's revision capability.
           </div>
         </div>
       </div>
@@ -281,28 +336,32 @@
               <strong>TAIScore.</strong> Given a full rollout &tau;&nbsp;=&nbsp;(x,&nbsp;y<sub>0</sub>,
               c,&nbsp;y<sub>1</sub>), a judge first produces four diagnostic scores
               (<em>critique validity</em>, <em>critique adherence</em>, <em>targeted improvement</em>,
-              and <em>faithfulness</em>), then produces a final scalar reward
-              T(&tau;)&nbsp;&isin;&nbsp;[1,&nbsp;10]. This diagnostic scaffold ensures the reward reflects
-              actor-conditioned usefulness rather than standalone critique quality or final revision
-              quality alone.
+              and <em>prompt faithfulness</em>, the last acting as a guardrail), then produces a final
+              scalar reward T(&tau;)&nbsp;&isin;&nbsp;[1,&nbsp;10] within the same inference pass. The
+              diagnostic scaffold ensures the reward reflects actor-conditioned usefulness rather than
+              standalone critique quality or final revision quality alone.
             </li>
             <li>
-              <strong>Critic update (GRPO).</strong> For each initial response y<sub>0</sub>, the critic
-              samples N critiques. Each critique triggers an actor revision, and all
-              rollouts in the group are scored by TAIScore. Group-relative advantages reward critiques
-              that provide more useful revision guidance than the other critiques for the same prompt.
+              <strong>Critic update (GRPO).</strong> For each on-policy initial response y<sub>0</sub>,
+              the critic samples N&nbsp;=&nbsp;4 critiques. The <em>same</em> actor revises the
+              <em>same</em> initial response under each critique, so every group controls for the prompt,
+              the initial response, and actor capability. All rollouts in the group are scored by
+              TAIScore, and group-relative advantages reward critiques that provide more useful revision
+              guidance than the alternatives for that prompt.
             </li>
             <li>
-              <strong>Actor update (DPO).</strong> The adapted critic generates critique-guided
-              revisions. Each revision y<sub>1</sub> is paired with the initial response y<sub>0</sub>
-              as a preference pair (y<sub>1</sub>&nbsp;&succ;&nbsp;y<sub>0</sub>), and the actor is
-              updated with DPO.
+              <strong>Actor update (DPO).</strong> The actor produces revisions using critiques from the
+              adapted critic. A <em>critique-blind</em> pairwise judge then compares each revision
+              y<sub>1</sub> against its own initial response y<sub>0</sub>; only revisions preferred over
+              y<sub>0</sub> are eligible (ties and preferences for y<sub>0</sub> are discarded). Eligible
+              rollouts are uniformly subsampled into preference pairs
+              (y<sub>1</sub>&nbsp;&succ;&nbsp;y<sub>0</sub>) for DPO.
             </li>
           </ol>
           <p>
             These two updates alternate across rounds, forming a <em>co-evolving</em> loop: the critic
-            continually adapts to the actor's current weaknesses, while the actor internalizes
-            progressively stronger critique-guided revisions.
+            continually adapts to the actor's current weaknesses and revision capability, while the actor
+            internalizes progressively stronger critique-guided revisions.
           </p>
           <div class="figure" style="margin-top: 1.5em;">
             <img src="./figure/method.png"
@@ -312,12 +371,59 @@
               &pi;<sub>t</sub>, the critic &kappa;<sub>t</sub> samples multiple critiques for the same
               initial response y<sub>0</sub>. Each critique produces a rollout
               &tau;<sub>i</sub>&nbsp;=&nbsp;(x,&nbsp;y<sub>0</sub>,&nbsp;c<sub>i</sub>,&nbsp;y<sub>1,i</sub>).
-              TAIScore evaluates each rollout and produces a GRPO reward for critic adaptation. The
-              adapted critic &kappa;<sub>t+1</sub> then generates critique-guided revisions, converted
-              into DPO preference pairs y<sub>1</sub>&nbsp;&succ;&nbsp;y<sub>0</sub> to update the
-              actor. Alternating these two updates yields co-evolving critics and actors.
+              TAIScore evaluates each rollout and produces a GRPO reward for critic adaptation. The actor
+              then produces candidate revisions using critiques from the adapted critic
+              &kappa;<sub>t+1</sub>; revisions preferred over their corresponding initial responses are
+              selected to construct DPO preference pairs
+              y<sub>1</sub>&nbsp;&succ;&nbsp;y<sub>0</sub> for updating the actor. Alternating these two
+              updates yields co-evolving critics and actors.
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== SETUP ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experimental Setup</h2>
+        <div class="content has-text-justified setup-list">
+          <ul>
+            <li>
+              <strong>Domains.</strong> <em>Creative writing</em> &mdash; trained on DeepWriting-20K
+              prompts, evaluated on WritingBench and HelloBench (Open-Ended QA and Heuristic Text
+              Generation subsets). <em>Deep research</em> &mdash; trained on OpenScholar queries,
+              evaluated on DeepResearch-Gym (key-point recall, key-point contradiction, report quality).
+              We use 6K training queries per domain.
+            </li>
+            <li>
+              <strong>Models.</strong> The actor and the critic are both <code>Qwen3-8B</code>. All actors
+              perform on-policy self-refinement: the same model writes the initial response and the
+              revision. <code>gpt-oss-120B</code> serves as the judge for TAIScore and all judge-based
+              rewards, and is never updated or used as the actor (except in the off-the-shelf critic
+              baseline).
+            </li>
+            <li>
+              <strong>Training.</strong> Critic: GRPO, N&nbsp;=&nbsp;4 critiques per prompt, learning rate
+              1e-6, KL coefficient 0.02. Actor: DPO with &beta;&nbsp;=&nbsp;0.1, learning rate 1e-6, one
+              epoch. Co-evolution alternates the two updates for three rounds (2K critic-training queries
+              and 2K DPO pairs per round); single-stage methods use the matching totals of 6K and 6K in
+              one stage. Runs use 4&times;&nbsp;NVIDIA RTX PRO 6000 Blackwell GPUs.
+            </li>
+            <li>
+              <strong>Evaluation.</strong> Official protocols throughout: the WritingBench evaluator, the
+              OpenCompass HelloBench implementation with the official <code>GPT-4o-mini</code> judge, and
+              the DeepResearch-Gym report-level scripts with <code>GPT-4.1-mini</code> over the officially
+              retrieved ClueWeb22 materials. For each method we generate three independent output sets and
+              report mean and standard deviation.
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -334,10 +440,10 @@
         <h2 class="title is-3">Main Results</h2>
         <div class="content has-text-justified">
           <p>
-            We evaluate on two non-verifiable domains: <strong>creative writing</strong>
-            (WritingBench, HelloBench) and <strong>deep research</strong> (DeepResearch-Gym), using
-            <code>Qwen3-8B</code> as the actor. All trained-critic conditions use the same DPO
-            actor-training pipeline and differ only in how the critiques for DPO pairs are produced.
+            All conditions use the same DPO actor-training pipeline and differ only in how the critiques
+            used to construct the DPO pairs are produced. Across conditions we hold fixed the candidate
+            queries, the number of candidate revisions, the pair-selection procedure, and the number of
+            DPO pairs.
           </p>
 
           <div style="overflow-x: auto; margin-top: 1.5em;">
@@ -361,57 +467,73 @@
               <tbody>
                 <tr>
                   <td><code>Qwen3-8B</code> (base)</td>
-                  <td>72.33</td><td>34.86</td><td>38.89</td>
-                  <td>71.93</td><td>1.18</td><td>81.85</td>
+                  <td>72.33<span class="std">&nbsp;&plusmn;0.08</span></td>
+                  <td>34.86<span class="std">&nbsp;&plusmn;1.95</span></td>
+                  <td>39.14<span class="std">&nbsp;&plusmn;1.76</span></td>
+                  <td>71.93<span class="std">&nbsp;&plusmn;0.04</span></td>
+                  <td>1.15<span class="std">&nbsp;&plusmn;0.09</span></td>
+                  <td>81.89<span class="std">&nbsp;&plusmn;0.07</span></td>
                 </tr>
-                <tr>
-                  <td colspan="7"
-                      style="background: #f9f9f9; color: #777; font-style: italic; font-size: 0.85em; padding: 0.35em 0.75em;">
-                    DPO pairs from off-the-shelf critics
-                  </td>
+                <tr class="group-row">
+                  <td colspan="7">DPO pairs from off-the-shelf critics</td>
                 </tr>
                 <tr>
                   <td><code>gpt-oss-120B</code> critic</td>
-                  <td>75.04</td><td>35.63</td><td>50.47</td>
-                  <td>73.12</td><td>1.16</td><td>82.35</td>
+                  <td>75.41<span class="std">&nbsp;&plusmn;0.14</span></td>
+                  <td>36.01<span class="std">&nbsp;&plusmn;2.36</span></td>
+                  <td>50.93<span class="std">&nbsp;&plusmn;2.18</span></td>
+                  <td>73.46<span class="std">&nbsp;&plusmn;0.09</span></td>
+                  <td>1.11<span class="std">&nbsp;&plusmn;0.08</span></td>
+                  <td>82.51<span class="std">&nbsp;&plusmn;0.06</span></td>
                 </tr>
-                <tr>
-                  <td colspan="7"
-                      style="background: #f9f9f9; color: #777; font-style: italic; font-size: 0.85em; padding: 0.35em 0.75em;">
-                    DPO pairs from trained critics (8B)
-                  </td>
+                <tr class="group-row">
+                  <td colspan="7">DPO pairs from trained critics (8B)</td>
                 </tr>
                 <tr>
                   <td>Outcome-gain reward</td>
-                  <td>75.38</td><td>34.97</td><td>44.58</td>
-                  <td>74.19</td><td>1.12</td><td>82.37</td>
+                  <td>75.63<span class="std">&nbsp;&plusmn;0.09</span></td>
+                  <td>35.35<span class="std">&nbsp;&plusmn;2.68</span></td>
+                  <td>45.14<span class="std">&nbsp;&plusmn;2.48</span></td>
+                  <td>74.37<span class="std">&nbsp;&plusmn;0.11</span></td>
+                  <td>1.12<span class="std">&nbsp;&plusmn;0.09</span></td>
+                  <td>82.38<span class="std">&nbsp;&plusmn;0.07</span></td>
                 </tr>
                 <tr>
                   <td>Critique-quality reward</td>
-                  <td>74.90</td><td>35.06</td><td>49.28</td>
-                  <td>74.00</td><td>1.18</td><td>82.25</td>
+                  <td>75.18<span class="std">&nbsp;&plusmn;0.11</span></td>
+                  <td>35.51<span class="std">&nbsp;&plusmn;2.45</span></td>
+                  <td>49.75<span class="std">&nbsp;&plusmn;4.32</span></td>
+                  <td>74.19<span class="std">&nbsp;&plusmn;0.13</span></td>
+                  <td>1.14<span class="std">&nbsp;&plusmn;0.11</span></td>
+                  <td>82.32<span class="std">&nbsp;&plusmn;0.04</span></td>
                 </tr>
                 <tr>
                   <td><strong>TAIScore (ours)</strong></td>
-                  <td><u>75.72</u></td><td><u>35.99</u></td><td><u>53.35</u></td>
-                  <td><u>74.96</u></td><td><u>1.09</u></td><td><u>82.42</u></td>
+                  <td><u>75.96</u><span class="std">&nbsp;&plusmn;0.12</span></td>
+                  <td><u>36.48</u><span class="std">&nbsp;&plusmn;2.56</span></td>
+                  <td><u>53.78</u><span class="std">&nbsp;&plusmn;1.58</span></td>
+                  <td><u>75.21</u><span class="std">&nbsp;&plusmn;0.09</span></td>
+                  <td><u>1.09</u><span class="std">&nbsp;&plusmn;0.07</span></td>
+                  <td><u>82.63</u><span class="std">&nbsp;&plusmn;0.06</span></td>
                 </tr>
-                <tr>
-                  <td colspan="7"
-                      style="background: #f9f9f9; color: #777; font-style: italic; font-size: 0.85em; padding: 0.35em 0.75em;">
-                    Co-evolving critic&ndash;actor training
-                  </td>
+                <tr class="group-row">
+                  <td colspan="7">Co-evolving critic&ndash;actor training</td>
                 </tr>
                 <tr>
                   <td><strong>TAIScore + co-evolution (ours)</strong></td>
-                  <td><strong>76.08</strong></td><td><strong>38.96</strong></td><td><strong>53.54</strong></td>
-                  <td><strong>75.55</strong></td><td><strong>1.06</strong></td><td><strong>82.80</strong></td>
+                  <td><strong>76.72</strong><span class="std">&nbsp;&plusmn;0.14</span></td>
+                  <td><strong>39.84</strong><span class="std">&nbsp;&plusmn;2.92</span></td>
+                  <td><strong>54.62</strong><span class="std">&nbsp;&plusmn;1.92</span></td>
+                  <td><strong>76.14</strong><span class="std">&nbsp;&plusmn;0.13</span></td>
+                  <td><strong>1.03</strong><span class="std">&nbsp;&plusmn;0.05</span></td>
+                  <td><strong>83.15</strong><span class="std">&nbsp;&plusmn;0.06</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p style="font-size: 0.88em; color: #555; margin-top: 0.5em;">
-            Results averaged over multiple runs; standard deviations are reported in the paper.
+          <p class="table-note">
+            Mean and standard deviation over three independent evaluation runs. Except for the base actor,
+            all rows report the final performance of the <code>Qwen3-8B</code> actor after DPO training.
             Best results in <strong>bold</strong>; second-best <u>underlined</u>.
           </p>
 
@@ -421,13 +543,147 @@
               all six metrics, showing that critic scale alone does not determine downstream usefulness.
             </li>
             <li>
-              TAIScore <strong>outperforms both reward ablations</strong> (outcome-gain and
-              critique-quality), confirming that evaluating the full critique-guided revision process
-              provides a better training signal.
+              TAIScore <strong>outperforms both reward ablations</strong>. Outcome-gain training rewards
+              better final revisions but cannot establish that the improvement is attributable to the
+              critique; critique-quality training rewards plausible feedback without checking whether the
+              actor can execute it.
             </li>
             <li>
               Co-evolving the critic with the actor <strong>further improves performance</strong> across
-              all benchmarks, e.g., WritingBench 75.72&rarr;76.08 and HelloBench OEQA 35.99&rarr;38.96.
+              all six metrics, e.g., WritingBench 75.96&rarr;76.72 and HelloBench OEQA 36.48&rarr;39.84.
+            </li>
+          </ul>
+
+          <h3 class="title is-4" style="margin-top: 2em;">Human Evaluation</h3>
+          <p>
+            Three annotators independently judged 50 randomly sampled WritingBench prompts under a blind
+            pairwise protocol, with system identities anonymized, response order randomized, and automatic
+            scores hidden. Human preferences corroborate the automatic results.
+          </p>
+          <div style="overflow-x: auto; margin-top: 1em;">
+            <table class="table is-bordered is-hoverable is-fullwidth results-table">
+              <thead>
+                <tr>
+                  <th>Comparison (A vs. B)</th>
+                  <th style="width: 5em;">A wins</th>
+                  <th style="width: 5em;">Tie</th>
+                  <th style="width: 5em;">B wins</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TAIScore vs. <code>Qwen3-8B</code></td>
+                  <td><strong>42</strong></td><td>5</td><td>3</td>
+                </tr>
+                <tr>
+                  <td>TAIScore vs. <code>gpt-oss-120B</code> critic</td>
+                  <td><strong>35</strong></td><td>7</td><td>7</td>
+                </tr>
+                <tr>
+                  <td>TAIScore + co-evolution vs. TAIScore</td>
+                  <td><strong>36</strong></td><td>8</td><td>5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">
+            Majority-vote preferences over 50 prompts. Rows 2&ndash;3 each omit one prompt for which the
+            three annotators produced no majority decision.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== DIRECT CRITIQUE UTILITY ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Direct Critique Utility, Before Actor Training</h2>
+        <div class="content has-text-justified">
+          <p>
+            Does the advantage of TAIScore depend on the actor-training pipeline, or is the feedback
+            itself simply better? We hold the prompts, initial responses
+            (S(y<sub>0</sub>)&nbsp;=&nbsp;72.33), <code>Qwen3-8B</code> reviser, revision prompt, decoding
+            configuration, and evaluator fixed, and vary <em>only</em> the supplied feedback &mdash; with
+            no actor update and no preference filtering.
+          </p>
+
+          <div style="overflow-x: auto; margin-top: 1.5em;">
+            <table class="table is-bordered is-hoverable is-fullwidth results-table">
+              <thead>
+                <tr>
+                  <th>Condition</th>
+                  <th style="width: 8em;">S(y<sub>1</sub>)</th>
+                  <th style="width: 8em;">&Delta; WritingBench</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="group-row">
+                  <td colspan="3">(a) Critic source / training objective</td>
+                </tr>
+                <tr>
+                  <td>Off-the-shelf <code>gpt-oss-120B</code></td>
+                  <td>73.82</td><td>+1.49</td>
+                </tr>
+                <tr>
+                  <td>Outcome-gain reward</td>
+                  <td>74.44</td><td>+2.11</td>
+                </tr>
+                <tr>
+                  <td>Critique-quality reward</td>
+                  <td>74.23</td><td>+1.90</td>
+                </tr>
+                <tr>
+                  <td><strong>TAIScore</strong></td>
+                  <td><strong>75.11</strong></td><td><strong>+2.78</strong></td>
+                </tr>
+                <tr class="group-row">
+                  <td colspan="3">(b) Critique-content controls</td>
+                </tr>
+                <tr>
+                  <td>No critique</td>
+                  <td>73.30</td><td>+0.97</td>
+                </tr>
+                <tr>
+                  <td>Generic critique</td>
+                  <td>73.34</td><td>+1.01</td>
+                </tr>
+                <tr>
+                  <td>Shuffled TAIScore critique</td>
+                  <td>72.88</td><td>+0.55</td>
+                </tr>
+                <tr>
+                  <td><strong>Matched TAIScore critique</strong></td>
+                  <td><strong>75.11</strong></td><td><strong>+2.78</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">
+            Direct refinement on WritingBench before actor DPO. All conditions share prompts, initial
+            responses, reviser, decoding, and evaluator; only the feedback varies. All revisions are
+            included without preference filtering.
+          </p>
+
+          <ul style="margin-top: 1.2em;">
+            <li>
+              The TAIScore-trained critic already yields the highest revision quality
+              <strong>before any actor update</strong>, ahead of the off-the-shelf, outcome-gain, and
+              critique-quality critics.
+            </li>
+            <li>
+              Panel (b) rules out generic second-pass improvement. Revising with no critique or a generic
+              critique gains only +0.97 and +1.01, and a TAIScore critique <em>sampled from a different
+              example</em> gains just +0.55 &mdash; below the no-critique control &mdash; despite
+              preserving the source and form of the feedback. The matched critique beats the strongest
+              control by <strong>1.77 points</strong>, so the gain depends on instance-specific,
+              correctly matched critique content rather than on the actor's general ability to improve on
+              a second pass.
             </li>
           </ul>
         </div>
@@ -438,32 +694,93 @@
 
 <hr class="section-divider">
 
-<!-- ===================== CROSS-POLICY TRANSFER ===================== -->
+<!-- ===================== ACTOR-CRITIC MATCHING ===================== -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Cross-Policy Transfer</h2>
+        <h2 class="title is-3">Actor&ndash;Critic Matching</h2>
         <div class="content has-text-justified">
           <p>
-            We examine whether actor-tailored critics transfer across actors by applying critics trained
-            for <code>Qwen3-4B</code> and <code>Qwen3-8B</code> to both actors. Critics provide positive
-            gains even when transferred, suggesting that TAIScore learns broadly useful revision signals.
-            At the same time, the matched critic consistently obtains the highest score for both actors,
-            consistent with our actor-conditioned view that aligning the critic with the target actor
-            provides additional benefit.
+            If critique usefulness is actor-conditioned, a critic should be most effective for the actor
+            it was tailored to. We fix the target actor to <code>Qwen3-8B</code> and train three critics
+            &mdash; tailored respectively to <code>Llama-3.2-3B</code>, <code>Qwen3-4B</code>, and
+            <code>Qwen3-8B</code>. All three start from the same <code>Qwen3-8B</code> checkpoint and use
+            the same TAIScore training procedure and budget; only the actor they are tailored to changes.
+            Each critic then constructs DPO pairs for the same target actor.
           </p>
-          <div class="figure" style="margin-top: 1.5em;">
-            <img src="./figure/opt1_gains.png"
-                 alt="Cross-policy transfer results on WritingBench"
-                 style="max-width: 65%; margin: auto; display: block;">
-            <p class="caption">
-              Cross-policy transfer on WritingBench. Bars show the gain over the base actor (&Delta;)
-              after DPO training; base scores are 72.19 (4B) and 72.33 (8B). <em>Matched</em> is the
-              critic trained for that same actor; <em>Transferred</em> is the critic trained for the
-              other actor.
-            </p>
+
+          <div style="overflow-x: auto; margin-top: 1.5em;">
+            <table class="table is-bordered is-hoverable is-fullwidth results-table">
+              <thead>
+                <tr>
+                  <th>Critic tailored to</th>
+                  <th style="width: 9em;">WritingBench</th>
+                  <th style="width: 7em;">Gain</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>None (base actor)</td>
+                  <td>72.33</td><td>&mdash;</td>
+                </tr>
+                <tr>
+                  <td><code>Llama-3.2-3B</code></td>
+                  <td>74.62</td><td>+2.29</td>
+                </tr>
+                <tr>
+                  <td><code>Qwen3-4B</code></td>
+                  <td>75.08</td><td>+2.75</td>
+                </tr>
+                <tr>
+                  <td><code>Qwen3-8B</code> <strong>(matched)</strong></td>
+                  <td><strong>75.96</strong></td><td><strong>+3.63</strong></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <p class="table-note">
+            The target actor is <code>Qwen3-8B</code> in every condition. All critics share the same
+            initialization and training setup and differ only in the actor to which they are tailored.
+          </p>
+
+          <p style="margin-top: 1.2em;">
+            Critique behavior learned with one actor remains useful to others &mdash; even across model
+            families, as the <code>Llama-3.2-3B</code>-tailored critic still gains +2.29. But the ordering
+            tracks how closely the tailoring actor matches the target: matching the critic to the target
+            actor yields the largest gain, outperforming the <code>Qwen3-4B</code>-tailored critic by 0.88
+            points and the <code>Llama-3.2-3B</code>-tailored critic by 1.34 points.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== JUDGE ROBUSTNESS ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Is the Reward Just an Artifact of One Judge?</h2>
+        <div class="content has-text-justified">
+          <p>
+            TAIScore is computed by <code>gpt-oss-120B</code> throughout critic training, so we check
+            whether the resulting rankings survive a change of judge. We independently rescore 800
+            rollouts (4 per prompt over 200 DeepWriting-20K prompts) with
+            <code>Claude Opus 4.8</code>, a model from a different provider, using the identical rubric
+            and judging prompt.
+          </p>
+          <p>
+            The two judges select the same top-ranked candidate for <strong>89.5%</strong> of prompts and
+            agree on <strong>77.9%</strong> of non-tied within-prompt pairwise orderings. Because GRPO
+            advantages depend only on the <em>relative</em> ordering of candidates within a group, this
+            indicates that the training signal is largely judge-invariant rather than an artifact of a
+            particular evaluator. Claude is used only for this analysis and never contributes to critique
+            generation, revision generation, or training.
+          </p>
         </div>
       </div>
     </div>
@@ -477,11 +794,15 @@
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>@article{kim2026coevolving,
-  title     = {Co-Evolving Actor-Conditioned Critics for Non-Verifiable Generation},
-  author    = {Kim, Jinyoung and Khalifa, Muhammad and Logeswaran, Lajanugen and
-               Kim, Jaekyeom and Lee, Moontae and Lee, Honglak and Wang, Lu},
-  journal   = {arXiv preprint},
-  year      = {2026}
+  title         = {Co-Evolving Actor-Conditioned Critics for Non-Verifiable Generation},
+  author        = {Kim, Jinyoung and Khalifa, Muhammad and Logeswaran, Lajanugen and
+                   Kim, Jaekyeom and Lee, Moontae and Lee, Honglak and Wang, Lu},
+  journal       = {arXiv preprint arXiv:2608.30397},
+  year          = {2026},
+  eprint        = {2608.30397},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2608.30397}
 }</code></pre>
   </div>
 </section>
@@ -490,6 +811,11 @@
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/abs/2608.30397"
+         target="_blank" rel="noopener" style="margin-right: 0.6em;">
+        <i class="ai ai-arxiv"></i>
+      </a>
       <a class="icon-link"
          href="https://github.com/jiny1623/taiscore"
          target="_blank" rel="noopener">
