@@ -551,43 +551,6 @@
               all six metrics, e.g., WritingBench 75.96&rarr;76.72 and HelloBench OEQA 36.48&rarr;39.84.
             </li>
           </ul>
-
-          <h3 class="title is-4" style="margin-top: 2em;">Human Evaluation</h3>
-          <p>
-            Three annotators independently judged 50 randomly sampled WritingBench prompts under a blind
-            pairwise protocol, with system identities anonymized, response order randomized, and automatic
-            scores hidden. Human preferences corroborate the automatic results.
-          </p>
-          <div style="overflow-x: auto; margin-top: 1em;">
-            <table class="table is-bordered is-hoverable is-fullwidth results-table">
-              <thead>
-                <tr>
-                  <th>Comparison (A vs. B)</th>
-                  <th style="width: 5em;">A wins</th>
-                  <th style="width: 5em;">Tie</th>
-                  <th style="width: 5em;">B wins</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>TAIScore vs. <code>Qwen3-8B</code></td>
-                  <td><strong>42</strong></td><td>5</td><td>3</td>
-                </tr>
-                <tr>
-                  <td>TAIScore vs. <code>gpt-oss-120B</code> critic</td>
-                  <td><strong>35</strong></td><td>7</td><td>7</td>
-                </tr>
-                <tr>
-                  <td>TAIScore + co-evolution vs. TAIScore</td>
-                  <td><strong>36</strong></td><td>8</td><td>5</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="table-note">
-            Majority-vote preferences over 50 prompts. Rows 2 and 3 each omit one prompt for which the
-            three annotators produced no majority decision.
-          </p>
         </div>
       </div>
     </div>
@@ -748,36 +711,6 @@
             tracks how closely the tailoring actor matches the target: matching the critic to the target
             actor yields the largest gain, outperforming the <code>Qwen3-4B</code>-tailored critic by 0.88
             points and the <code>Llama-3.2-3B</code>-tailored critic by 1.34 points.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="section-divider">
-
-<!-- ===================== JUDGE ROBUSTNESS ===================== -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Is the Reward Just an Artifact of One Judge?</h2>
-        <div class="content has-text-justified">
-          <p>
-            TAIScore is computed by <code>gpt-oss-120B</code> throughout critic training, so we check
-            whether the resulting rankings survive a change of judge. We independently rescore 800
-            rollouts (4 per prompt over 200 DeepWriting-20K prompts) with
-            <code>Claude Opus 4.8</code>, a model from a different provider, using the identical rubric
-            and judging prompt.
-          </p>
-          <p>
-            The two judges select the same top-ranked candidate for <strong>89.5%</strong> of prompts and
-            agree on <strong>77.9%</strong> of non-tied within-prompt pairwise orderings. Because GRPO
-            advantages depend only on the <em>relative</em> ordering of candidates within a group, this
-            indicates that the training signal is largely judge-invariant rather than an artifact of a
-            particular evaluator. Claude is used only for this analysis and never contributes to critique
-            generation, revision generation, or training.
           </p>
         </div>
       </div>
